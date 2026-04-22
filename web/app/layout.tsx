@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   description:
     'Portfolio de David Zamora Pérez, Backend Developer especializado en Node.js & TypeScript · Hexagonal Architecture + DDD',
   keywords: ['backend', 'nodejs', 'typescript', 'hexagonal architecture', 'ddd'],
+  icons: {
+    icon: '/logo.png',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
