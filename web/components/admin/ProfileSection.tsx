@@ -76,7 +76,7 @@ export function ProfileSection({ token }: { token: string }) {
           disabled={loading}
           className="rounded border border-accent px-5 py-2 font-mono text-sm text-accent transition-all hover:bg-accent hover:text-bg disabled:opacity-50"
         >
-          {loading ? '> guardando...' : '> ./save'}
+          {loading ? '&gt; guardando...' : '&gt; ./save'}
         </button>
         {status && (
           <span className={`font-mono text-xs ${status.startsWith('✓') ? 'text-accent' : 'text-red-400'}`}>

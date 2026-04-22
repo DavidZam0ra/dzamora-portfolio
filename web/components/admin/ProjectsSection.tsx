@@ -112,7 +112,7 @@ export function ProjectsSection({ token }: { token: string }) {
           </label>
           <div className="flex items-center gap-3">
             <button type="submit" className="rounded border border-accent px-4 py-2 font-mono text-sm text-accent hover:bg-accent hover:text-bg transition-all">
-              > ./save
+              &gt; ./save
             </button>
             <button type="button" onClick={() => setShowForm(false)} className="font-mono text-xs text-text-muted hover:text-text-primary">cancelar</button>
             {status && <span className={`font-mono text-xs ${status.startsWith('✓') ? 'text-accent' : 'text-red-400'}`}>{status}</span>}
