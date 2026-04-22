@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
 
-export default function AdminLoginPage() {
+function LoginForm() {
   const searchParams = useSearchParams();
   const [error, setError] = useState('');
 
@@ -16,9 +16,27 @@ export default function AdminLoginPage() {
   }, [searchParams]);
 
   return (
+    <div className="rounded-lg border border-border bg-surface p-6">
+      {error && (
+        <p className="mb-4 rounded border border-red-500/30 bg-red-500/10 px-3 py-2 font-mono text-xs text-red-400">
+          &gt; {error}
+        </p>
+      )}
+      <a
+        href={`${API_URL}/api/auth/google`}
+        className="flex w-full items-center justify-center gap-3 rounded border border-border bg-bg py-3 font-mono text-sm text-text-primary transition-all hover:border-accent hover:text-accent"
+      >
+        <GoogleIcon />
+        ./login with Google
+      </a>
+    </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
     <main className="flex min-h-screen items-center justify-center bg-bg px-4">
       <div className="w-full max-w-sm">
-        {/* Back to site */}
         <div className="mb-6 text-center">
           <Link
             href="/"
@@ -28,27 +46,14 @@ export default function AdminLoginPage() {
           </Link>
         </div>
 
-        {/* Header */}
         <div className="mb-8 text-center">
           <p className="font-mono text-lg text-accent">david@admin:~$</p>
           <p className="mt-1 font-mono text-xs text-text-muted">panel de administración</p>
         </div>
 
-        <div className="rounded-lg border border-border bg-surface p-6">
-          {error && (
-            <p className="mb-4 rounded border border-red-500/30 bg-red-500/10 px-3 py-2 font-mono text-xs text-red-400">
-              &gt; {error}
-            </p>
-          )}
-
-          <a
-            href={`${API_URL}/api/auth/google`}
-            className="flex w-full items-center justify-center gap-3 rounded border border-border bg-bg py-3 font-mono text-sm text-text-primary transition-all hover:border-accent hover:text-accent"
-          >
-            <GoogleIcon />
-            ./login with Google
-          </a>
-        </div>
+        <Suspense fallback={<div className="rounded-lg border border-border bg-surface p-6" />}>
+          <LoginForm />
+        </Suspense>
       </div>
     </main>
   );
