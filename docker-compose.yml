@@ -1,0 +1,66 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: portfolio_mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - portfolio_net
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    container_name: portfolio_api
+    ports:
+      - '3001:3001'
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/portfolio
+      - JWT_SECRET=${JWT_SECRET}
+      - PORT=3001
+      - NODE_ENV=development
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - portfolio_net
+    volumes:
+      - ./api/src:/app/src
+      - ./api/package.json:/app/package.json
+      - ./api/tsconfig.json:/app/tsconfig.json
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: portfolio_web
+    ports:
+      - '3000:3000'
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+    depends_on:
+      - api
+    networks:
+      - portfolio_net
+    volumes:
+      - ./web/app:/app/app
+      - ./web/components:/app/components
+      - ./web/lib:/app/lib
+      - ./web/public:/app/public
+      - ./web/package.json:/app/package.json
+      - ./web/tsconfig.json:/app/tsconfig.json
+      - ./web/tailwind.config.ts:/app/tailwind.config.ts
+      - ./web/postcss.config.mjs:/app/postcss.config.mjs
+      - ./web/next.config.mjs:/app/next.config.mjs
+
+networks:
+  portfolio_net:
+volumes:
+  mongo_data:
