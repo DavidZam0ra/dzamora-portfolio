@@ -15,7 +15,7 @@ async function getSkills(): Promise<Skill[]> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'}/api/skills`,
-      { next: { revalidate: 60 } }
+      { cache: 'no-store' }
     );
     if (!res.ok) return [];
     return res.json();

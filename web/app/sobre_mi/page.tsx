@@ -11,7 +11,7 @@ const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
 
 async function getProfile(): Promise<Profile | null> {
   try {
-    const res = await fetch(`${API}/api/profile`, { next: { revalidate: 60 } });
+    const res = await fetch(`${API}/api/profile`, { cache: 'no-store' });
     if (!res.ok) return null;
     return res.json();
   } catch {

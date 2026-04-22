@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
-const OPTS = { next: { revalidate: 60 } };
+const OPTS = { cache: 'no-store' } as const;
 
 async function fetchJSON<T>(path: string): Promise<T> {
   try {
