@@ -8,6 +8,7 @@ import { ExperienceSection } from '@/components/admin/ExperienceSection';
 import { SkillsSection } from '@/components/admin/SkillsSection';
 import { ProjectsSection } from '@/components/admin/ProjectsSection';
 import { EducationSection } from '@/components/admin/EducationSection';
+import { WelcomeEasterEgg } from '@/components/admin/WelcomeEasterEgg';
 
 type Section = 'profile' | 'experience' | 'skills' | 'projects' | 'education';
 
@@ -34,6 +35,7 @@ export default function DashboardPage() {
 
   return (
     <div className="flex min-h-screen bg-bg">
+      <WelcomeEasterEgg />
       {/* Sidebar */}
       <aside className="flex w-56 shrink-0 flex-col border-r border-border bg-surface">
         <div className="border-b border-border px-4 py-4">
@@ -64,7 +66,7 @@ export default function DashboardPage() {
             href="/"
             className="flex items-center gap-2 rounded px-3 py-2 font-mono text-xs text-text-muted transition-colors hover:bg-surface-hover hover:text-accent"
           >
-            <span>↗</span> ./ver sitio
+            <span>↗</span> ./volver al inicio
           </Link>
           <button
             onClick={logout}

@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
             href="/"
             className="font-mono text-xs text-text-muted transition-colors hover:text-accent"
           >
-            ← ./volver al sitio
+            ← ./volver al inicio
           </Link>
         </div>
 

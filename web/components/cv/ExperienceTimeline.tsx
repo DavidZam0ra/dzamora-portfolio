@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Experience } from '@/lib/types';
 
 function formatDate(dateStr: string): string {
@@ -12,11 +12,11 @@ function formatDate(dateStr: string): string {
 
 function TimelineCard({ exp }: { exp: Experience }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -27,7 +27,6 @@ function TimelineCard({ exp }: { exp: Experience }) {
       },
       { threshold: 0.15 }
     );
-
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
@@ -38,7 +37,7 @@ function TimelineCard({ exp }: { exp: Experience }) {
   return (
     <div
       ref={ref}
-      className="opacity-0 translate-y-4 transition-all duration-500 ease-out"
+      className="translate-y-4 opacity-0 transition-all duration-500 ease-out"
     >
       {/* Date badge */}
       <div className="mb-3 font-mono text-xs text-text-muted">
@@ -46,48 +45,65 @@ function TimelineCard({ exp }: { exp: Experience }) {
       </div>
 
       {/* Card */}
-      <div className="rounded-lg border border-border bg-surface p-5 transition-colors hover:border-accent/30 hover:bg-surface-hover">
-        {/* Header */}
-        <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
+      <div className="rounded-lg border border-border bg-surface transition-colors hover:border-accent/30">
+        {/* Header — always visible, click to toggle */}
+        <button
+          onClick={() => setOpen((o) => !o)}
+          className="flex w-full items-center justify-between gap-2 p-5 text-left"
+          aria-expanded={open}
+        >
           <div>
             <p className="font-mono text-base font-semibold text-accent">{exp.company}</p>
             <p className="text-sm font-medium text-text-primary">{exp.role}</p>
           </div>
-          <span className="shrink-0 rounded border border-border px-2 py-0.5 font-mono text-xs text-text-muted">
-            {formatDate(exp.startDate)} — {endLabel}
-          </span>
-        </div>
-
-        {/* Description */}
-        {exp.description && (
-          <p className="mb-4 text-sm leading-relaxed text-text-secondary">{exp.description}</p>
-        )}
-
-        {/* Achievements */}
-        {exp.achievements.length > 0 && (
-          <ul className="mb-4 flex flex-col gap-1.5">
-            {exp.achievements.map((ach, i) => (
-              <li key={i} className="flex items-start gap-2 font-mono text-xs">
-                <span className="mt-px shrink-0 text-accent">&gt;</span>
-                <span className="text-text-secondary">{ach}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {/* Tech stack pills */}
-        {exp.techStack.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
-            {exp.techStack.map((tech) => (
-              <span
-                key={tech}
-                className="rounded border border-border bg-bg px-2 py-0.5 font-mono text-xs text-text-secondary"
-              >
-                {tech}
-              </span>
-            ))}
+          <div className="flex shrink-0 items-center gap-3">
+            <span className="hidden rounded border border-border px-2 py-0.5 font-mono text-xs text-text-muted sm:inline">
+              {formatDate(exp.startDate)} — {endLabel}
+            </span>
+            <span
+              className={`font-mono text-xs text-text-muted transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+            >
+              ▾
+            </span>
           </div>
-        )}
+        </button>
+
+        {/* Collapsible body */}
+        <div
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+            open ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="border-t border-border px-5 pb-5 pt-4">
+            {exp.description && (
+              <p className="mb-4 text-sm leading-relaxed text-text-secondary">{exp.description}</p>
+            )}
+
+            {exp.achievements.length > 0 && (
+              <ul className="mb-4 flex flex-col gap-1.5">
+                {exp.achievements.map((ach, i) => (
+                  <li key={i} className="flex items-start gap-2 font-mono text-xs">
+                    <span className="mt-px shrink-0 text-accent">&gt;</span>
+                    <span className="text-text-secondary">{ach}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {exp.techStack.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {exp.techStack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded border border-border bg-bg px-2 py-0.5 font-mono text-xs text-text-secondary"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

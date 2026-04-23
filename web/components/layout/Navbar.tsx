@@ -5,10 +5,10 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 const NAV_LINKS = [
-  { href: '/', label: './inicio' },
-  { href: '/sobre_mi', label: './sobre_mi' },
-  { href: '/stack', label: './stack' },
-  { href: '/cv_interactivo', label: './cv_interactivo' },
+  { href: '/#inicio',     label: './inicio' },
+  { href: '/#cv',        label: './cv' },
+  { href: '/#stack',     label: './stack' },
+  { href: '/#proyectos', label: './proyectos' },
 ];
 
 export function Navbar() {
@@ -31,7 +31,7 @@ export function Navbar() {
         {/* Desktop links */}
         <div className="hidden items-center gap-1 md:flex">
           {NAV_LINKS.map(({ href, label }) => {
-            const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
+            const isActive = href.startsWith('/#') ? false : pathname.startsWith(href);
             return (
               <Link
                 key={href}
@@ -67,11 +67,11 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+        {/* Mobile menu */}
       {menuOpen && (
         <div className="border-t border-border bg-bg px-4 pb-4 pt-2 md:hidden">
           {NAV_LINKS.map(({ href, label }) => {
-            const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
+            const isActive = href.startsWith('/#') ? false : pathname.startsWith(href);
             return (
               <Link
                 key={href}
