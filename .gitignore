@@ -26,3 +26,6 @@ Thumbs.db
 
 # Scripts (seed/utils locales)
 api/src/scripts/
+
+# Cursor
+.cursor/
