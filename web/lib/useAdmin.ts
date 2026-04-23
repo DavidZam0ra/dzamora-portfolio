@@ -29,6 +29,7 @@ export function useAdmin() {
 
   function logout() {
     auth.removeToken();
+    sessionStorage.removeItem('admin-welcomed');
     router.replace('/admin/login');
   }
 

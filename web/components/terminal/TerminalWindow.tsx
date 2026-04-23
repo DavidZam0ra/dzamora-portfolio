@@ -29,16 +29,23 @@ export function TerminalWindow({
 }: TerminalWindowProps) {
   const [displayed, setDisplayed] = useState<DisplayLine[]>([]);
   const [done, setDone] = useState(false);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  // Shared ref: each animation run gets a unique generation id.
+  // Any stale async continuation checks this and bails out.
+  const genRef = useRef(0);
 
   useEffect(() => {
-    let cancelled = false;
+    const gen = ++genRef.current;
+    const alive = () => genRef.current === gen;
+
+    setDisplayed([]);
+    setDone(false);
 
     async function animate() {
       for (const line of lines) {
-        if (cancelled) return;
+        if (!alive()) return;
 
         if (line.delay) await wait(line.delay);
+        if (!alive()) return;
 
         if (line.command) {
           setDisplayed((prev) => [
@@ -47,8 +54,9 @@ export function TerminalWindow({
           ]);
 
           for (let i = 1; i <= line.command.length; i++) {
-            if (cancelled) return;
+            if (!alive()) return;
             await wait(typingSpeed);
+            if (!alive()) return;
             const partial = line.command.slice(0, i);
             setDisplayed((prev) => {
               const next = [...prev];
@@ -57,6 +65,7 @@ export function TerminalWindow({
             });
           }
 
+          if (!alive()) return;
           setDisplayed((prev) => {
             const next = [...prev];
             next[next.length - 1] = { kind: 'command', text: line.command!, complete: true };
@@ -64,26 +73,22 @@ export function TerminalWindow({
           });
 
           await wait(80);
+          if (!alive()) return;
         }
 
-        if (line.output) {
-          if (cancelled) return;
+        if (line.output !== undefined) {
           setDisplayed((prev) => [...prev, { kind: 'output', text: line.output! }]);
-          await wait(120);
+          await wait(line.output === '' ? 40 : 120);
+          if (!alive()) return;
         }
       }
 
-      if (!cancelled) setDone(true);
+      if (alive()) setDone(true);
     }
 
     animate();
-    return () => { cancelled = true; };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [displayed]);
 
   return (
     <div
@@ -116,6 +121,9 @@ export function TerminalWindow({
             );
           }
 
+          if (line.text === '') {
+            return <div key={idx} className="h-3" />;
+          }
           return (
             <div key={idx} className="flex items-start gap-2">
               <span className="select-none text-text-muted">&gt;</span>
@@ -132,7 +140,6 @@ export function TerminalWindow({
           </div>
         )}
 
-        <div ref={bottomRef} />
       </div>
     </div>
   );
