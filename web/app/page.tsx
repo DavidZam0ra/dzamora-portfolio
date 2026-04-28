@@ -159,16 +159,32 @@ export default async function HomePage() {
           )}
 
           {/* Descargar CV */}
-          <div className="mt-10 flex flex-col items-center gap-3 border-t border-border pt-8">
-            <a
-              href="/CV - David Zamora Pérez.pdf"
-              download
-              className="flex items-center gap-2 rounded border border-accent px-5 py-2.5 font-mono text-sm text-accent transition-all duration-200 hover:bg-accent hover:text-bg"
-            >
-              <span>↓</span>
-              <span>./descargar_cv.pdf</span>
-            </a>
-            <span className="font-mono text-xs text-text-muted">CV — David Zamora Pérez.pdf</span>
+          <div className="mt-10 border-t border-border pt-8">
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="flex flex-col items-center gap-3">
+                <a
+                  href="/CV-ES-David Zamora Pérez.pdf"
+                  download
+                  className="flex items-center gap-2 rounded border border-accent px-5 py-2.5 font-mono text-sm text-accent transition-all duration-200 hover:bg-accent hover:text-bg"
+                >
+                  <span>↓</span>
+                  <span>./descargar_cv_es.pdf</span>
+                </a>
+                <span className="font-mono text-xs text-text-muted">CV — David Zamora Pérez - Spanish.pdf</span>
+              </div>
+
+              <div className="flex flex-col items-center gap-3">
+                <a
+                  href="/CV-EN-David Zamora Pérez.pdf"
+                  download
+                  className="flex items-center gap-2 rounded border border-accent px-5 py-2.5 font-mono text-sm text-accent transition-all duration-200 hover:bg-accent hover:text-bg"
+                >
+                  <span>↓</span>
+                  <span>./descargar_cv_en.pdf</span>
+                </a>
+                <span className="font-mono text-xs text-text-muted">CV — David Zamora Pérez - English.pdf</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -213,7 +229,7 @@ export default async function HomePage() {
       {/* ══════════════════════════════════════════════
           § 4 — PROYECTOS
       ══════════════════════════════════════════════ */}
-      <section id="proyectos" className="scroll-mt-14 border-t border-border">
+      <section id="proyectos" className="scroll-mt-14 min-h-screen border-t border-border">
         <div className="mx-auto max-w-4xl px-4 pb-32 pt-24 md:px-8">
           <div className="mb-2 font-mono text-sm text-accent">
             $ ls ./projects --featured

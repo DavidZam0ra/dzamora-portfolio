@@ -21,10 +21,10 @@ async function getProfile(): Promise<Profile | null> {
 
 const FALLBACK: Profile = {
   name: 'David Zamora Pérez',
-  role: 'Backend Developer · Node.js & TypeScript',
+  role: 'Software Developer · Node.js & TypeScript',
   focus: 'Hexagonal Architecture + DDD + AI-Enhanced Dev',
   location: 'Valencia, España',
-  bio: 'Soy desarrollador Backend especializado en el ecosistema de Node.js y TypeScript. En los últimos años me he enfocado en construir sistemas donde la fiabilidad del dato es crítica, pasando de crear paneles de métricas complejos en mi etapa de Reports a gestionar microservicios de facturación internacional en mi rol actual. Me apasiona trabajar con Arquitectura Hexagonal y DDD porque creo que el código debe ser escalable y fácil de mantener. Además, soy un adoptante entusiasta de la IA, integrándola en mi día a día para ser más eficiente y asegurar la calidad del software que entrego.',
+  bio: 'Desarrollador Fullstack con más de 4 años en el sector. Especializado en Backend y centrado en construir sistemas escalables con Node.js (TS/JS) y arquitecturas sólidas como Hexagonal y DDD. Me motiva el aprendizaje constante y actualmente aprovecho las herramientas de IA para optimizar mis flujos de desarrollo y mantenerme a la vanguardia de las soluciones técnicas actuales.',
   email: 'david@example.com',
   github: 'https://github.com/DavidZam0ra',
   linkedin: 'https://linkedin.com/in/david-zamora-perez',

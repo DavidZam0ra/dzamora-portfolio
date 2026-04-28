@@ -27,10 +27,14 @@
 }
 
 html {
+  height: 100%;
+  overflow-y: auto;
   scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
 }
 
 body {
+  min-height: 100%;
   background-color: var(--bg);
   color: var(--text-primary);
   font-family: var(--font-inter), sans-serif;
@@ -62,6 +66,11 @@ a {
 ::selection {
   background-color: rgba(0, 229, 160, 0.2);
   color: var(--accent);
+}
+
+/* Scroll snap — top-level page sections only */
+section:is(#inicio, #cv, #stack, #proyectos) {
+  scroll-snap-align: start;
 }
 
 /* Dot grid background utility */

@@ -17,10 +17,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'David Zamora Pérez — Backend Developer',
+  title: 'David Zamora Pérez — Full Stack Developer',
   description:
-    'Portfolio de David Zamora Pérez, Backend Developer especializado en Node.js & TypeScript · Hexagonal Architecture + DDD',
-  keywords: ['backend', 'nodejs', 'typescript', 'hexagonal architecture', 'ddd'],
+    'Portfolio de David Zamora Pérez, Full Stack Developer especializado en Node.js & TypeScript · Hexagonal Architecture + DDD',
+  keywords: ['full stack', 'backend', 'frontend', 'nodejs', 'typescript', 'hexagonal architecture', 'ddd'],
   icons: {
     icon: '/logo.png',
   },
